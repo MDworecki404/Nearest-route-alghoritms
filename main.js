@@ -6,7 +6,7 @@ const options = {
     2: { name: 'Create a half-edge data structure', file: './halfEdges/halfEdgeCreator.js' },
     3: { name: 'Run the A* algorithm for the graph', file: './aStar/aStarGraph.js' },
     4: { name: 'Run the A* algorithm for the half-edge data structure', file: './aStar/aStarHalfEdge.js' },
-    5: { name: 'Run the Dijkstra algorithm for the graph', file: './dijsktra/dijkstraGraph.js' },
+    5: { name: 'Run the Dijkstra algorithm for the graph', file: './dijkstra/dijkstraGraph.js' },
     6: { name: 'Run the Dijkstra algorithm for the half-edge data structure', file: './dijkstra/dijkstraHalfEdge.js' },
     
 };

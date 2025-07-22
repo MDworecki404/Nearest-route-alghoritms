@@ -1,5 +1,6 @@
 const bikeFootGraph = require("../output/graphs/bikeFootGraph.json")
 const carGraph = require("../output/graphs/carGraph.json")
+const fs = require("fs")
 
 // Funkcja budująca graf na podstawie danych GeoJSON
 const buildGraph = (mode) => {
@@ -33,21 +34,21 @@ const heuristic = (a, b) => {
 
 
 const findNearestNode = (point, nodes) => {
-        let nearest = null;
-        let minDist = Infinity;
+    let nearest = null;
+    let minDist = Infinity;
 
-        nodes.forEach(node => {
-            const dist = Math.sqrt(
-                Math.pow(node[0] - point[0], 2) + Math.pow(node[1] - point[1], 2)
-            );
-            if (dist < minDist) {
-                minDist = dist;
-                nearest = node;
-            }
-        });
+    nodes.forEach(node => {
+        const dist = Math.sqrt(
+            Math.pow(node[0] - point[0], 2) + Math.pow(node[1] - point[1], 2)
+        );
+        if (dist < minDist) {
+            minDist = dist;
+            nearest = node;
+        }
+    });
 
-        return nearest;
-    };
+    return nearest;
+};
 
 
 const aStar = (start, goal, graph) => {
@@ -107,3 +108,5 @@ const aStar = (start, goal, graph) => {
 
 const path = aStar([17.0634787, 51.110551], [17.0959078, 51.0987664], buildGraph("foot"))
 console.log("Path found:", path)
+const pathCsv = path.map(coord => coord.join(',')).join('\n');
+fs.writeFileSync('./output/paths/aStarPath.txt', pathCsv);
