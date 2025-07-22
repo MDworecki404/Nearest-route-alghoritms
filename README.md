@@ -6,12 +6,12 @@ The algorithms are run on real-world road network data from OpenStreetMap for th
 
 ## Features
 
-- Implementation of **Dijkstra's algorithm**.
-- Implementation of the **A* search algorithm**.
-- Graph creation from **OpenStreetMap (OSM)** data.
+- Implementation of Dijkstra's algorithm.
+- Implementation of the A* search algorithm.
+- Graph creation from OpenStreetMap (OSM) data.
 - Support for two graph representations:
-  - **Standard Graph** (Adjacency List)
-  - **Half-Edge Data Structure**
+  - Standard Graph (Adjacency List)
+  - Half-Edge Data Structure
 - Separation of graphs based on travel type (e.g., car, bike/foot).
 
 ## Project Structure
