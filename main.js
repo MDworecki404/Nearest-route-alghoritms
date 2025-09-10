@@ -8,7 +8,7 @@ const options = {
     4: { name: 'Run the A* algorithm for the half-edge data structure', file: './aStar/aStarHalfEdge.js' },
     5: { name: 'Run the Dijkstra algorithm for the graph', file: './dijkstra/dijkstraGraph.js' },
     6: { name: 'Run the Dijkstra algorithm for the half-edge data structure', file: './dijkstra/dijkstraHalfEdge.js' },
-    
+
 };
 
 const rl = readline.createInterface({
@@ -44,6 +44,6 @@ rl.question('\nEnter the option number: ', (answer) => {
         }
             rl.close();
         });
-    
-    
+
+
 });

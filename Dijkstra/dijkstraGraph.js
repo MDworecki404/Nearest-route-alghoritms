@@ -2,7 +2,6 @@ const bikeFootGraph = require("../output/graphs/bikeFootGraph.json")
 const carGraph = require("../output/graphs/carGraph.json")
 const fs = require("fs")
 
-// Funkcja budująca graf na podstawie danych GeoJSON
 const buildGraph = (mode) => {
     let graph
 
@@ -14,13 +13,11 @@ const buildGraph = (mode) => {
         throw new Error(`Unkown mode: ${mode}`)
     }
 
-  // Zamiana edges z obiektu na Mapę
     const edgesMap = new Map()
     for (const key in graph.edges) {
         edgesMap.set(key, graph.edges[key])
     }
 
-  // nodes są już w postaci tablicy, więc bez zmian
     return {
         nodes: graph.nodes,
         edges: edgesMap
@@ -45,24 +42,23 @@ const findNearestNode = (point, nodes) => {
 };
 
 const dijkstra = (start, goal, graph) => {
-    const { nodes, edges } = graph // Pobranie węzłów i krawędzi z grafu
-    const startKey = JSON.stringify(findNearestNode(start, nodes)) // Konwersja punktu początkowego na string (dla Map)
-    const goalKey = JSON.stringify(findNearestNode(goal, nodes)) // Konwersja punktu docelowego na string (dla Map)
+    const { nodes, edges } = graph
+    const startKey = JSON.stringify(findNearestNode(start, nodes))
+    const goalKey = JSON.stringify(findNearestNode(goal, nodes))
 
     let S = new Set()
-    let Q = new Set(nodes.map(node => JSON.stringify(node))) // Zbiór wszystkich węzłów
-    
-    let dist = new Map(nodes.map(node => [JSON.stringify(node), Infinity])) // Koszt dojścia do każdego węzła (Infinity na start)
-    dist.set(startKey, 0) // Koszt dojścia do węzła startowego to 0
-    
-    let prev = new Map() // Mapa śledząca, skąd przyszliśmy do danego węzła
+    let Q = new Set(nodes.map(node => JSON.stringify(node)))
+
+    let dist = new Map(nodes.map(node => [JSON.stringify(node), Infinity]))
+    dist.set(startKey, 0)
+
+    let prev = new Map()
     nodes.forEach(node => {
-        prev.set(JSON.stringify(node), null) // Na początku nie mamy żadnych poprzedników
+        prev.set(JSON.stringify(node), null)
     });
 
     while (Q.size > 0) {
 
-        // Znajdź węzeł o najmniejszym koszcie dojścia
         let current = null;
         let minDist = Infinity;
 
@@ -74,29 +70,27 @@ const dijkstra = (start, goal, graph) => {
         }
 
         if (current === goalKey) {
-            // Jeśli dotarliśmy do celu, odbuduj ścieżkę
             const path = [];
             let step = current;
             while (step !== null) {
                 path.unshift(JSON.parse(step));
                 step = prev.get(step);
             }
-            return path; // Zwróć znalezioną ścieżkę
+            return path;
         }
 
-        Q.delete(current); // Usuń bieżący węzeł z Q
-        S.add(current); // Dodaj bieżący węzeł do S
+        Q.delete(current);
+        S.add(current);
         console.log(Q.size)
-        // Przeglądaj sąsiadów bieżącego węzła
         const neighbors = edges.get(current) || [];
         for (const neighbor of neighbors) {
             const neighborKey = JSON.stringify(neighbor);
-            if (S.has(neighborKey)) continue; // Jeśli sąsiad jest już w S, pomiń go
+            if (S.has(neighborKey)) continue;
 
-            const alt = dist.get(current) + 1; // Zakładamy, że każda krawędź ma wagę 1
+            const alt = dist.get(current) + 1;
             if (alt < dist.get(neighborKey)) {
-                dist.set(neighborKey, alt); // Aktualizuj koszt dojścia do sąsiada
-                prev.set(neighborKey, current); // Ustaw poprzednika dla sąsiada
+                dist.set(neighborKey, alt);
+                prev.set(neighborKey, current);
             }
         }
     }

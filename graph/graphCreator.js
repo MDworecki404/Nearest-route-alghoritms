@@ -5,35 +5,35 @@ const buildGraph = (network, mode) => {
     console.log(mode);
     let nodes = new Set();
     let edges = new Map();
-    
+
     let allowedClasses;
     if (mode === "bikeFoot") {
         allowedClasses = [
-            "footway",      
-            "pedestrian",   
-            "path",         
-            "cycleway",     
-            "steps",        
-            "service",      
+            "footway",
+            "pedestrian",
+            "path",
+            "cycleway",
+            "steps",
+            "service",
             "living_street",
-            "track",        
-            "bridleway"     
+            "track",
+            "bridleway"
         ]
     } else if (mode === "car") {
         allowedClasses = [
-            "motorway",        
-            "motorway_link",   
-            "trunk",           
+            "motorway",
+            "motorway_link",
+            "trunk",
             "primary",
             "primary_link",
             "secondary",
             "secondary_link",
             "tertiary",
             "tertiary_link",
-            "residential",     
-            "service",         
-            "living_street",   
-            "unclassified"     
+            "residential",
+            "service",
+            "living_street",
+            "unclassified"
         ]
     }
 
@@ -47,7 +47,7 @@ const buildGraph = (network, mode) => {
                 for (let i = 0; i < line.length; i++) {
                     const point = line[i];
                     const key = JSON.stringify(point);
-                    
+
                     nodes.add(key);
 
                     if (i > 0) {
@@ -61,7 +61,7 @@ const buildGraph = (network, mode) => {
 
     console.log('Nodes amount:', nodes.size);
     console.log('Edges amount', edges.size);
-    
+
     return { nodes: Array.from(nodes).map(JSON.parse), edges };
 };
 
