@@ -81,7 +81,6 @@ const dijkstra = (start, goal, graph) => {
 
         Q.delete(current);
         S.add(current);
-        console.log(Q.size)
         const neighbors = edges.get(current) || [];
         for (const neighbor of neighbors) {
             const neighborKey = JSON.stringify(neighbor);
@@ -98,6 +97,5 @@ const dijkstra = (start, goal, graph) => {
 
 const path = dijkstra([17.0634787, 51.110551], [17.0959078, 51.0987664], buildGraph("car"))
 
-console.log(path)
 const pathCsv = path.map(coord => coord.join(',')).join('\n');
-fs.writeFileSync('./output/paths/dijkstraPath.txt', pathCsv);
+fs.writeFileSync('./output/paths/dijkstraPathGraph.txt', pathCsv);

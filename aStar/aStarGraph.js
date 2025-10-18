@@ -101,4 +101,4 @@ const aStar = (start, goal, graph) => {
 const path = aStar([17.0634787, 51.110551], [17.0959078, 51.0987664], buildGraph("foot"))
 console.log("Path found:", path)
 const pathCsv = path.map(coord => coord.join(',')).join('\n');
-fs.writeFileSync('./output/paths/aStarPath.txt', pathCsv);
+fs.writeFileSync('./output/paths/aStarPathGraph.txt', pathCsv);
