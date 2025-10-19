@@ -81,6 +81,7 @@ const serializeHalfEdges = (halfEdges) => {
                 V: he.V,
                 siblingId: he.S ? he.S.id : null,
                 distanceToSibling: he.S ? Math.sqrt(Math.pow(he.V[0] - he.S.V[0], 2) + Math.pow(he.V[1] - he.S.V[1], 2)) : null,
+                twoDirectional: false,
                 from: he.id,
                 to: he.S.id,
             };
@@ -90,6 +91,7 @@ const serializeHalfEdges = (halfEdges) => {
                 V: he.V,
                 siblingId: he.S ? he.S.id : null,
                 distanceToSibling: he.S ? Math.sqrt(Math.pow(he.V[0] - he.S.V[0], 2) + Math.pow(he.V[1] - he.S.V[1], 2)) : null,
+                twoDirectional: false,
                 from: he.S.id,
                 to: he.id,
             };
@@ -99,8 +101,7 @@ const serializeHalfEdges = (halfEdges) => {
                 V: he.V,
                 siblingId: he.S ? he.S.id : null,
                 distanceToSibling: he.S ? Math.sqrt(Math.pow(he.V[0] - he.S.V[0], 2) + Math.pow(he.V[1] - he.S.V[1], 2)) : null,
-                from: "two-directional",
-                to: "two-directional",
+                twoDirectional: true,
             };
         }
     });
@@ -112,6 +113,24 @@ try {
     fs.writeFileSync('./output/halfEdges/halfEdges.json', JSON.stringify(serializedHalfEdges, null, 2));
     console.log('Half-edges successfully saved to file!');
     console.log(`Total half-edges: ${halfEdges.length}`);
+} catch (error) {
+    console.error('Error saving half-edges:', error);
+}
+
+const edgesList = [];
+
+for (let i = 0; i < serializedHalfEdges.length; i+=2) {
+    const edge = {
+        id: `${serializedHalfEdges[i].id}-${serializedHalfEdges[i+1].id}`,
+        edge: [serializedHalfEdges[i], serializedHalfEdges[i+1]]
+    }
+    edgesList.push(edge);
+}
+
+try {
+    fs.writeFileSync('./output/halfEdges/convertedHalfEdges.json', JSON.stringify(edgesList, null, 2));
+    console.log('Edges successfully saved to file!');
+    console.log(`Total edges: ${edgesList.length}`);
 } catch (error) {
     console.error('Error saving half-edges:', error);
 }
