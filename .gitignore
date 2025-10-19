@@ -73,11 +73,6 @@ $RECYCLE.BIN/
 logs
 *.log
 
-# Output files (generated data)
-output/paths/*.txt
-output/graphs/*.json
-output/halfEdges/*.json
-
 # Temporary files
 tmp/
 temp/
